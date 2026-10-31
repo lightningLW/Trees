@@ -125,3 +125,31 @@ const BSTnode* BST::_find_recursive(const BSTnode* root, int key) const
         return root;
     }
 }
+
+BSTnode* BST::findMax(const BSTnode *root) const
+{
+    if (root == nullptr)
+    {
+        return nullptr;
+    }
+    BSTnode* curNode = root->leftTree;
+    while (curNode != nullptr && curNode->rightTree != nullptr)
+    {
+        curNode = curNode->rightTree;
+    }
+    return curNode;
+}
+
+BSTnode* BST::findMin(const BSTnode *root) const
+{
+    if (root == nullptr)
+    {
+        return nullptr;
+    }
+    BSTnode* curNode = root->rightTree;
+    while (curNode != nullptr && curNode->leftTree != nullptr)
+    {
+        curNode = curNode->leftTree;
+    }
+    return curNode;
+}

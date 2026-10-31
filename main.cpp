@@ -4,7 +4,7 @@
 int main()
 {
     BST bsTree;
-    bsTree.insert(9);
+    auto rt = bsTree.insert(9);
     bsTree.insert(3);
     bsTree.insert(12);
     bsTree.insert(10);
@@ -22,6 +22,8 @@ int main()
     //     std::cout << "not find!" << std::endl;
     // }
 
+    BSTnode* node = bsTree.findMin(rt.second);
+    std::cout << node->val << std::endl;
     // bsTree.printLDR();
     return 0;
 }

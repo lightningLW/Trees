@@ -81,6 +81,20 @@ public:
         return _find_recursive(root, key);
     }
 
+    /*
+     * @brife: 查找中序前驱节点
+     * @param root: 以该节点为根
+     * @return: 成功, 返回节点的地址; 否则, 返回nullptr.
+    */
+    BSTnode* findMax(const BSTnode* root) const;
+
+    /*
+     * @brife: 查找中序后继节点
+     * @param root: 以该节点为根
+     * @return: 成功, 返回节点的地址; 否则, 返回nullptr.
+    */
+    BSTnode* findMin(const BSTnode* root) const;
+
 };// !class BST
 
 
