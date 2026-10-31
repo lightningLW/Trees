@@ -105,3 +105,23 @@ const BSTnode* BST::find_iterate(int key) const
     }
     return curNode;
 }
+
+const BSTnode* BST::_find_recursive(const BSTnode* root, int key) const
+{
+    if (root == nullptr)
+    {
+        return root;
+    }
+    if (key > root->val)
+    {
+       return _find_recursive(root->rightTree, key);
+    }
+    else if (key < root->val)
+    {
+       return _find_recursive(root->leftTree, key);
+    }
+    else
+    {
+        return root;
+    }
+}

@@ -22,6 +22,7 @@ struct BSTnode {
 class BST {
 private:
     BSTnode* root;
+
     /*
      * @brife: 插入value值到BST中
      * @param value: 插入的值
@@ -35,6 +36,13 @@ private:
     */
     void printLDR_traverse(const BSTnode* root) const;
 
+    /*
+     * @brife: 根据键值key, 查找节点 递归实现
+     * @param root: 以此为根节点向下查找
+     * @param key: 所查找的键值
+     * @return: 成功, 返回节点的地址; 否则, 返回nullptr.
+    */
+    const BSTnode* _find_recursive(const BSTnode* root, int key) const;
 public:
     BST() : root(nullptr) {}
     //TODO: ~BST()
@@ -57,11 +65,22 @@ public:
     }
 
     /*
-     * @brife: 查找value值的节点
+     * @brife: 根据键值key, 查找节点 迭代实现
      * @param key: 所查找的键值
      * @return: 成功, 返回节点的地址; 否则, 返回nullptr.
     */
     const BSTnode* find_iterate(int key) const;
+
+    /*
+     * @brife: 根据键值key, 查找节点 递归实现
+     * @param key: 所查找的键值
+     * @return: 成功, 返回节点的地址; 否则, 返回nullptr.
+    */
+    const BSTnode* find_recursive(int key) const
+    {
+        return _find_recursive(root, key);
+    }
+
 };// !class BST
 
 

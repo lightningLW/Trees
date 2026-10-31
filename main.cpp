@@ -4,7 +4,6 @@
 int main()
 {
     BST bsTree;
-    std::pair<bool, BSTnode*> rt;
     bsTree.insert(9);
     bsTree.insert(3);
     bsTree.insert(12);
@@ -12,21 +11,17 @@ int main()
     bsTree.insert(8);
     bsTree.insert(15);
     bsTree.insert(5);
-    rt = bsTree.insert(11);
-    if (rt.first)
-    {
-        std::cout << "insert " << rt.second->val << " success!" << std::endl;
-    }
 
-    const BSTnode* node = bsTree.find_iterate(1);
-    if (node != nullptr)
-    {
-        std::cout << "is find!" <<  node->val << std::endl;
-    }
-    else
-    {
-        std::cout << "not find!" << std::endl;
-    }
+    // const BSTnode* node = bsTree.find_recursive(11);
+    // if (node != nullptr)
+    // {
+    //     std::cout << "is find!" <<  node->val << std::endl;
+    // }
+    // else
+    // {
+    //     std::cout << "not find!" << std::endl;
+    // }
+
     // bsTree.printLDR();
     return 0;
 }
