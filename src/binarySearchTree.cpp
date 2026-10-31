@@ -82,3 +82,26 @@ void BST::printLDR_traverse(const BSTnode* root) const
     }
 }
 
+const BSTnode* BST::find_iterate(int key) const
+{
+    const BSTnode* curNode = root;
+    while (curNode != nullptr)
+    {
+        if (key > curNode->val)
+        {
+            //到右子树继续查找
+            curNode = curNode->rightTree;
+        }
+        else if (key < curNode->val)
+        {
+            //到左子树继续查找
+            curNode = curNode->leftTree;
+        }
+        else
+        {
+            //找到
+            break;
+        }
+    }
+    return curNode;
+}

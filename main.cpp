@@ -17,6 +17,16 @@ int main()
     {
         std::cout << "insert " << rt.second->val << " success!" << std::endl;
     }
-    bsTree.printLDR();
+
+    const BSTnode* node = bsTree.find_iterate(1);
+    if (node != nullptr)
+    {
+        std::cout << "is find!" <<  node->val << std::endl;
+    }
+    else
+    {
+        std::cout << "not find!" << std::endl;
+    }
+    // bsTree.printLDR();
     return 0;
 }
