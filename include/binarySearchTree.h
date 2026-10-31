@@ -38,9 +38,15 @@ private:
 public:
     BST() : root(nullptr) {}
     //TODO: ~BST()
+
     std::pair<bool, BSTnode*> insert(int value)
     {
         return insertNode(value);
+    }
+
+    void printLDR() const
+    {
+        printLDR_traverse(root);
     }
 };// !class BST
 

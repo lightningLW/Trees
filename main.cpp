@@ -9,5 +9,8 @@ int main()
     bsTree.insert(12);
     bsTree.insert(10);
     bsTree.insert(8);
+    bsTree.insert(15);
+    bsTree.insert(5);
+    bsTree.printLDR();
     return 0;
 }

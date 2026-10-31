@@ -53,3 +53,31 @@ std::pair<bool, BSTnode*> BST::insertNode(int value)
     }
     return res;
 }
+
+void BST::printLDR_traverse(const BSTnode* root) const
+{
+    const BSTnode* left = root->leftTree;
+    const BSTnode* right = root->rightTree;
+    if (root == nullptr)
+    {
+        return;
+    }
+    // if (left == nullptr && right == nullptr)
+    // {
+    //     std::cout << root->val << "\t";
+    // }
+    if (left != nullptr)
+    {
+        printLDR_traverse(left);
+        std::cout << root->val << "\t";
+    }
+    else
+    {
+        std::cout << root->val << "\t";
+    }
+    if (right != nullptr)
+    {
+        printLDR_traverse(right);
+    }
+}
+
