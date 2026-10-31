@@ -43,6 +43,14 @@ private:
      * @return: 成功, 返回节点的地址; 否则, 返回nullptr.
     */
     const BSTnode* _find_recursive(const BSTnode* root, int key) const;
+
+    /*
+     * @brife: 删除节点
+     * @param root: 开始查找的根节点
+     * @param key: 所要删除的节点的键值
+     * @return:
+    */
+    BSTnode* deleteNode(BSTnode* root, int key);
 public:
     BST() : root(nullptr) {}
     //TODO: ~BST()
@@ -95,6 +103,23 @@ public:
     */
     BSTnode* findMin(const BSTnode* root) const;
 
+    /*
+     * @brife: 根据key值删除节点
+     * @param key: 键值
+     * @return: 删除是否成功
+    */
+    bool remove(int key)
+    {
+        BSTnode* node = deleteNode(root, key);
+        if (node == nullptr)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
 };// !class BST
 
 

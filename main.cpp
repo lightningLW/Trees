@@ -22,8 +22,13 @@ int main()
     //     std::cout << "not find!" << std::endl;
     // }
 
-    BSTnode* node = bsTree.findMin(rt.second);
-    std::cout << node->val << std::endl;
-    // bsTree.printLDR();
+    // BSTnode* node = bsTree.findMin(rt.second);
+    // std::cout << node->val << std::endl;
+
+    bsTree.remove(8);
+
+    bsTree.printLDR();
+
+
     return 0;
 }

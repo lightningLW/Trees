@@ -153,3 +153,44 @@ BSTnode* BST::findMin(const BSTnode *root) const
     }
     return curNode;
 }
+
+BSTnode* BST::deleteNode(BSTnode* root, int key)
+{
+    if (root == nullptr)
+    {
+        return nullptr;
+    }
+    
+    if (key > root->val)
+    {
+        root->rightTree = deleteNode(root->rightTree, key);    
+    }
+    else if (key < root->val)
+    {
+        root->leftTree = deleteNode(root->leftTree, key);
+    }
+    else
+    {
+        if (root->leftTree == nullptr)
+        {
+            BSTnode* tmp = root->rightTree;
+            delete root;
+            root = nullptr;
+            return tmp;
+        }
+        if (root->rightTree == nullptr)
+        {
+            BSTnode* tmp = root->leftTree;
+            delete root;
+            root = nullptr;
+            return tmp;
+        }
+        if (root->leftTree != nullptr && root->rightTree != nullptr)
+        {
+            BSTnode* minNode = findMin(root);
+            root->val = minNode->val;
+            root->rightTree = deleteNode(root->rightTree, minNode->val);
+        }
+    }
+    return root;
+}
