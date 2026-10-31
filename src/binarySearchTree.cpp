@@ -62,10 +62,11 @@ void BST::printLDR_traverse(const BSTnode* root) const
     {
         return;
     }
-    // if (left == nullptr && right == nullptr)
-    // {
-    //     std::cout << root->val << "\t";
-    // }
+    if (left == nullptr && right == nullptr)
+    {
+        std::cout << root->val << "\t";
+        return;
+    }
     if (left != nullptr)
     {
         printLDR_traverse(left);
