@@ -8,7 +8,15 @@
 ***********************************************************************************************************************/
 
 #include "binarySearchTree.h"
-#include <iostream>
+
+BST::~BST()
+{
+    std::function<void (BSTnode*)> func = [](BSTnode* node)->void {
+        // std::cout << node->val << "\t";
+        delete node;
+    };
+    LRD_traverse(root, func);
+}
 
 std::pair<bool, BSTnode*> BST::insertNode(int value)
 {
@@ -199,4 +207,21 @@ BSTnode* BST::deleteNode(BSTnode* root, int key)
         }
     }
     return root;
+}
+
+void BST::LRD_traverse(BSTnode* root, std::function<void (BSTnode*)> func)
+{
+    if (root == nullptr)
+    {
+        return;
+    }
+    if (root->leftTree != nullptr)
+    {
+        LRD_traverse(root->leftTree, func);
+    }
+    if (root->rightTree != nullptr)
+    {
+        LRD_traverse(root->rightTree, func);
+    }
+    func(root);
 }

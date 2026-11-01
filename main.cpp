@@ -25,9 +25,10 @@ int main()
     // BSTnode* node = bsTree.findMin(rt.second);
     // std::cout << node->val << std::endl;
 
-    bsTree.remove(9);
+    // bsTree.remove(9);
 
-    bsTree.printLDR();
+    // bsTree.printLDR();
+    // std::cout << std::endl;
 
 
     return 0;

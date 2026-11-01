@@ -10,6 +10,8 @@
 #define __BINARYSEARCHTREE_H__
 
 #include <utility>
+#include <functional>
+#include <iostream>
 
 //二叉查找树节点node
 struct BSTnode {
@@ -51,9 +53,16 @@ private:
      * @return: 删除节点的父节点
     */
     BSTnode* deleteNode(BSTnode* root, int key);
+
+    /*
+     * @brife: 遍历树 左子树-->右子树-->根
+     * @param root: 遍历的根节点
+     * @param func: 对节点所做的操作
+    */
+    void LRD_traverse(BSTnode* root, std::function<void (BSTnode*)> func);
 public:
     BST() : root(nullptr) {}
-    //TODO: ~BST()
+    ~BST();
 
     /*
      * @brife:往二叉查找树插入 @value值
@@ -110,6 +119,16 @@ public:
     void remove(int key)
     {
         deleteNode(root, key);
+    }
+
+    /*
+     * @brife: 后根遍历树
+     * @param func: 对节点所执行的操作
+     * @return: void
+    */
+    void LRD_dosomething(std::function<void (BSTnode*)> func = [](BSTnode* node) { std::cout << node->val << "\t";})
+    {
+        LRD_traverse(root, func);
     }
 };// !class BST
 
