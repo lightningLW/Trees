@@ -48,7 +48,7 @@ private:
      * @brife: 删除节点
      * @param root: 开始查找的根节点
      * @param key: 所要删除的节点的键值
-     * @return:
+     * @return: 删除节点的父节点
     */
     BSTnode* deleteNode(BSTnode* root, int key);
 public:
@@ -106,19 +106,10 @@ public:
     /*
      * @brife: 根据key值删除节点
      * @param key: 键值
-     * @return: 删除是否成功
     */
-    bool remove(int key)
+    void remove(int key)
     {
-        BSTnode* node = deleteNode(root, key);
-        if (node == nullptr)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        deleteNode(root, key);
     }
 };// !class BST
 

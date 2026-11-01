@@ -171,25 +171,31 @@ BSTnode* BST::deleteNode(BSTnode* root, int key)
     }
     else
     {
-        if (root->leftTree == nullptr)
+        if (root->leftTree == nullptr && root->rightTree == nullptr)        //所删节点是叶子节点
         {
-            BSTnode* tmp = root->rightTree;
             delete root;
             root = nullptr;
-            return tmp;
+            return nullptr;
         }
-        if (root->rightTree == nullptr)
+        else if (root->leftTree != nullptr && root->rightTree == nullptr)   //所删节点只有左子节点
         {
             BSTnode* tmp = root->leftTree;
             delete root;
             root = nullptr;
             return tmp;
         }
-        if (root->leftTree != nullptr && root->rightTree != nullptr)
+        else if (root->leftTree == nullptr && root->rightTree != nullptr)   //所删节点只有右子节点
+        {
+            BSTnode* tmp = root->rightTree;
+            delete root;
+            root = nullptr;
+            return tmp;
+        }
+        else if (root->leftTree != nullptr && root->rightTree != nullptr)   //所删节点即有左子节点又有右子节点
         {
             BSTnode* minNode = findMin(root);
             root->val = minNode->val;
-            root->rightTree = deleteNode(root->rightTree, minNode->val);
+            root->rightTree = deleteNode(minNode, minNode->val);
         }
     }
     return root;
