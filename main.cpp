@@ -3,6 +3,7 @@
 
 int main()
 {
+#if 0 // @二叉搜索树BST
     BST bsTree;
     auto rt = bsTree.insert(9);
     bsTree.insert(3);
@@ -29,7 +30,7 @@ int main()
 
     // bsTree.printLDR();
     // std::cout << std::endl;
-
+#endif  // !@二叉搜索树BST
 
     return 0;
 }

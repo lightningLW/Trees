@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
 * @file: binarySearchTrss.h
-* @brife: 二叉查找树模块
+* @brief: 二叉查找树模块
 * @date: 2026-10-30
 * @update:
 * @author: lightningLW
@@ -26,20 +26,20 @@ private:
     BSTnode* root;
 
     /*
-     * @brife: 插入value值到BST中
+     * @brief: 插入value值到BST中
      * @param value: 插入的值
      * @return: first: 是否插入成功; second: 新插入的节点地址
     */
     std::pair<bool, BSTnode*> insertNode(int value);
 
     /*
-     * @brife: 中序遍历树
+     * @brief: 中序遍历树
      * @param root: 遍历的树的根节点
     */
     void printLDR_traverse(const BSTnode* root) const;
 
     /*
-     * @brife: 根据键值key, 查找节点 递归实现
+     * @brief: 根据键值key, 查找节点 递归实现
      * @param root: 以此为根节点向下查找
      * @param key: 所查找的键值
      * @return: 成功, 返回节点的地址; 否则, 返回nullptr.
@@ -47,7 +47,7 @@ private:
     const BSTnode* _find_recursive(const BSTnode* root, int key) const;
 
     /*
-     * @brife: 删除节点
+     * @brief: 删除节点
      * @param root: 开始查找的根节点
      * @param key: 所要删除的节点的键值
      * @return: 删除节点的父节点
@@ -55,7 +55,7 @@ private:
     BSTnode* deleteNode(BSTnode* root, int key);
 
     /*
-     * @brife: 遍历树 左子树-->右子树-->根
+     * @brief: 遍历树 左子树-->右子树-->根
      * @param root: 遍历的根节点
      * @param func: 对节点所做的操作
     */
@@ -65,7 +65,7 @@ public:
     ~BST();
 
     /*
-     * @brife:往二叉查找树插入 @value值
+     * @brief:往二叉查找树插入 @value值
      * @param value: 插入到树中的值
      * @return: first: 插入是否成功; second: 若插入成功, 返回插入节点的地址;否则, 返回nullptr.
     */
@@ -74,7 +74,7 @@ public:
         return insertNode(value);
     }
     /*
-     * @brife: 中序遍历树
+     * @brief: 中序遍历树
     */
     void printLDR() const
     {
@@ -82,14 +82,14 @@ public:
     }
 
     /*
-     * @brife: 根据键值key, 查找节点 迭代实现
+     * @brief: 根据键值key, 查找节点 迭代实现
      * @param key: 所查找的键值
      * @return: 成功, 返回节点的地址; 否则, 返回nullptr.
     */
     const BSTnode* find_iterate(int key) const;
 
     /*
-     * @brife: 根据键值key, 查找节点 递归实现
+     * @brief: 根据键值key, 查找节点 递归实现
      * @param key: 所查找的键值
      * @return: 成功, 返回节点的地址; 否则, 返回nullptr.
     */
@@ -99,21 +99,21 @@ public:
     }
 
     /*
-     * @brife: 查找中序前驱节点
+     * @brief: 查找中序前驱节点
      * @param root: 以该节点为根
      * @return: 成功, 返回节点的地址; 否则, 返回nullptr.
     */
     BSTnode* findMax(const BSTnode* root) const;
 
     /*
-     * @brife: 查找中序后继节点
+     * @brief: 查找中序后继节点
      * @param root: 以该节点为根
      * @return: 成功, 返回节点的地址; 否则, 返回nullptr.
     */
     BSTnode* findMin(const BSTnode* root) const;
 
     /*
-     * @brife: 根据key值删除节点
+     * @brief: 根据key值删除节点
      * @param key: 键值
     */
     void remove(int key)
@@ -122,7 +122,7 @@ public:
     }
 
     /*
-     * @brife: 后根遍历树
+     * @brief: 后根遍历树
      * @param func: 对节点所执行的操作
      * @return: void
     */
