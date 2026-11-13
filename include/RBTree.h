@@ -43,6 +43,18 @@ private:
     */
     //TODO: 插入节点
     std::pair<bool, Node*> _insert(int key);
+    /*
+     * @brief: 左旋转
+     * @param x: 旋转的子节点
+     * @return Node*: 旋转后的父节点
+    */
+    Node* rotateLeft(Node* x);
+    /*
+     * @brief: 右旋转
+     * @param x: 旋转的子节点
+     * @return Node*: 旋转后的父节点
+    */
+    Node* rotateRight(Node* x);
 public:
     RBTree() : root(nullptr) {}
     //TODO: : 析构函数 delete节点 
@@ -51,7 +63,10 @@ public:
     {
         _LDR_traverse(root, func);
     }
-    std::pair<bool, Node*> insert(int key);
+    std::pair<bool, Node*> insert(int key)
+    {
+        return _insert(key);
+    }
 }; // !class RBTree
 
 #endif // !__RBTREE_H__

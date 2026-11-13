@@ -1,5 +1,6 @@
 #include <iostream>
 #include "binarySearchTree.h"
+#include "RBTree.h"
 
 int main()
 {
@@ -31,6 +32,14 @@ int main()
     // bsTree.printLDR();
     // std::cout << std::endl;
 #endif  // !@二叉搜索树BST
+
+    RBTree rbTree;
+    rbTree.insert(10);
+    rbTree.insert(18);
+    rbTree.insert(28);
+    rbTree.LDR_traverse([](const Node* x) {
+            std::cout << "key: " << x->key << " color: " <<  static_cast<int>(x->color) << std::endl;
+    });
 
     return 0;
 }
