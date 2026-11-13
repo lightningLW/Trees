@@ -89,11 +89,13 @@ std::pair<bool, Node*> RBTree::_insert(int key)
                     else if (tmp->left == curNode)
                     {
                         tmp->left = rotateLeft(x);
+                        x->parent = tmp;
                         return std::make_pair(true, x);
                     }
                     else
                     {
                         tmp->right = rotateLeft(x);
+                        x->parent = tmp;
                         return std::make_pair(true, x);
                     }
                 }
