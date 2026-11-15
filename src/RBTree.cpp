@@ -42,66 +42,41 @@ void RBTree::_LDR_traverse(const Node* root, std::function<void (const Node*)> f
 
 std::pair<bool, Node*> RBTree::_insert(int key)
 {
+    Node* x = new Node(key);
     if (root == nullptr)
     {
-        root = new Node(key);
-        root->color = Color::black;
-        return std::make_pair(true, root);
+        root = x;
+        return std::make_pair(true, x);
     }
     else
     {
-        //HACK: 临时只有一个父节点
-        Node* x = new Node(key);
-        Node* curNode  = root;
+        Node* curNode = root;
         while (true)
         {
             if (key < curNode->key)
             {
-                Node* curLeft = curNode->left;
                 if (curNode->left == nullptr)
                 {
-                    //插入到左链接
                     curNode->left = x;
                     x->parent = curNode;
                     return std::make_pair(true, x);
                 }
                 else
                 {
-                    curNode = curLeft;
+                    curNode = curNode->left;
                 }
             }
             else if (key > curNode->key)
             {
-                Node* curRight = curNode->right;
                 if (curNode->right == nullptr)
                 {
-                    //插入到右链接
-                    Node* tmp = curNode->parent;
                     curNode->right = x;
                     x->parent = curNode;
-                    
-                    if (tmp == nullptr)
-                    {
-                        root = rotateLeft(x);
-                        root->parent = nullptr;
-                        return std::make_pair(true, x);
-                    }
-                    else if (tmp->left == curNode)
-                    {
-                        tmp->left = rotateLeft(x);
-                        x->parent = tmp;
-                        return std::make_pair(true, x);
-                    }
-                    else
-                    {
-                        tmp->right = rotateLeft(x);
-                        x->parent = tmp;
-                        return std::make_pair(true, x);
-                    }
+                    return std::make_pair(true, x);
                 }
                 else
                 {
-                    curNode = curRight;
+                    curNode = curNode->right;
                 }
             }
             else
@@ -110,7 +85,6 @@ std::pair<bool, Node*> RBTree::_insert(int key)
             }
         }
     }
-
 }
 
 Node* RBTree::rotateLeft(Node* x)
@@ -131,4 +105,65 @@ Node* RBTree::rotateRight(Node* x)
     x->color = x_parent->color;
     x_parent->color = Color::red;
     return x;
+}
+
+void RBTree::transform2RBTree(Node* x)
+{
+    if (x == root)
+    {
+        x->color = Color::black;
+    }
+    else
+    {
+        if (x->parent->color == Color::red)
+        {
+        }
+        else            //x->parent->color == black
+        {
+            if (leftORrightChild(x) == 0)
+            {
+                return;
+            }
+            else if (leftORrightChild(x) == 1)
+            {
+                return;
+            }
+            else
+            {
+                Node* tmp = x->parent->parent;
+                if (leftORrightChild(x->parent) == 0)
+                {
+                    rotateLeft(x);
+                    x->parent = nullptr;
+                }
+                else if (leftORrightChild(x->parent) == 1)
+                {
+                    tmp->left = rotateLeft(x);
+
+                }
+                else
+                {}
+            }
+        }
+    }
+}
+
+int RBTree::leftORrightChild(const Node* x) const
+{
+    const Node* x_parent = x->parent;
+    if (x_parent == nullptr)
+    {
+        return 0;
+    }
+    else
+    {
+        if (x_parent->left == x)
+        {
+            return 1;
+        }
+        else
+        {
+            return 2;
+        }
+    }
 }

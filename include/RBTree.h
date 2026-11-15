@@ -40,8 +40,8 @@ private:
      * @brief: 插入键值为key的节点
      * @param key: 键值
      * @return: std::pair<bool, Node*> first-->插入是否成功; second-->指向插入节点
+     * @note: 只管插入节点, 不负责颜色和旋转等
     */
-    //TODO: 插入节点
     std::pair<bool, Node*> _insert(int key);
     /*
      * @brief: 左旋转
@@ -55,6 +55,18 @@ private:
      * @return Node*: 旋转后的父节点
     */
     Node* rotateRight(Node* x);
+    /*
+     * @brief: 对插入的节点进行旋转操作, 使其符合红黑树的性质
+     * @param x: 新插入的节点
+     * @return: void
+    */
+    void transform2RBTree(Node* x);
+    /*
+     * @brief:判断一个节点是左孩子还是右孩子
+     * @param x: 待判定的节点
+     * @return int: 0:表示无父节点; 1表示是左孩子; 2表示是右孩子
+    */
+    int leftORrightChild(const Node* x) const; 
 public:
     RBTree() : root(nullptr) {}
     //TODO: : 析构函数 delete节点 
