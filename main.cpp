@@ -34,11 +34,18 @@ int main()
 #endif  // !@二叉搜索树BST
 
     RBTree rbTree;
-    rbTree.insert(10);
-    rbTree.insert(8);
-    rbTree.insert(9);
+    rbTree.insert('s');
+    rbTree.insert('e');
+    rbTree.insert('a');
+    rbTree.insert('r');
+    rbTree.insert('c');
+    rbTree.insert('h');
+    rbTree.insert('x');
+    // rbTree.insert('m');
+    // rbTree.insert('p');
+    // rbTree.insert('l');
     rbTree.LDR_traverse([](const Node* x) {
-            std::cout << "key: " << x->key << " color: " <<  static_cast<int>(x->color) << std::endl;
+            std::cout << "key: " << static_cast<char>(x->key) << " color: " <<  static_cast<int>(x->color) << std::endl;
     });
 
     return 0;

@@ -111,6 +111,7 @@ Node* RBTree::rotateRight(Node* x)
 
 void RBTree::transform2RBTree(Node* x)
 {
+    // std::cout << static_cast<char>(x->key) << std::endl;
     if (x == root)
     {
         x->color = Color::black;
@@ -184,7 +185,54 @@ void RBTree::transform2RBTree(Node* x)
             }
         }
         else            //x->parent->color == black
-        {}
+        {
+            int i = leftORrightChild(x);
+            if (x == 0)
+            {
+                x->color = Color::black;
+                return;
+            }
+            else if (i == 1)                            //第1种情况: 插入的节点是左孩子
+            {
+                return;
+            }
+            else
+            {
+                Node* x_parent = x->parent;
+                Node* x_leftBro = x_parent->left;
+                if (x_leftBro != nullptr && x_leftBro->color == Color::red)     //第2种情况: 插入的节点是右孩子, 且插入节点的左兄弟是红孩子
+                {
+                    x_leftBro->color = Color::black;
+                    x->color = Color::black;
+                    x_parent->color = Color::red;
+                    transform2RBTree(x_parent);
+                }
+                else                                    //第3种情况: 插入的节点是右孩子, 且插入节点的左兄弟是黑孩子
+                {
+                    // std::cout << static_cast<char>(x->key) << std::endl;
+                    int j = leftORrightChild(x_parent);
+                    Node* x_parent_parent = x_parent->parent;
+                    rotateLeft(x);
+                    if (j == 0)
+                    {
+                        root = x;
+                        return;
+                    }
+                    else if (j == 1)
+                    {
+                        x_parent_parent->left = x;
+                        x->parent = x_parent_parent;
+                        return;
+                    }
+                    else
+                    {
+                        x_parent_parent->right = x;
+                        x->parent = x_parent_parent;
+                        return;
+                    }
+                }
+            }
+        }
     }
 }
 
