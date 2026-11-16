@@ -35,8 +35,8 @@ int main()
 
     RBTree rbTree;
     rbTree.insert(10);
-    rbTree.insert(18);
-    rbTree.insert(28);
+    rbTree.insert(8);
+    rbTree.insert(9);
     rbTree.LDR_traverse([](const Node* x) {
             std::cout << "key: " << x->key << " color: " <<  static_cast<int>(x->color) << std::endl;
     });

@@ -92,6 +92,7 @@ Node* RBTree::rotateLeft(Node* x)
     Node* x_parent = x->parent;
     x_parent->right = x->left;
     x->left = x_parent;
+    x_parent->parent = x;
     x->color = x_parent->color;
     x_parent->color = Color::red;
     return x;
@@ -102,6 +103,7 @@ Node* RBTree::rotateRight(Node* x)
     Node* x_parent = x->parent;
     x_parent->left = x->right;
     x->right = x_parent;
+    x_parent->parent = x;
     x->color = x_parent->color;
     x_parent->color = Color::red;
     return x;
@@ -117,34 +119,72 @@ void RBTree::transform2RBTree(Node* x)
     {
         if (x->parent->color == Color::red)
         {
-        }
-        else            //x->parent->color == black
-        {
             if (leftORrightChild(x) == 0)
             {
                 return;
             }
             else if (leftORrightChild(x) == 1)
             {
-                return;
+                int i = leftORrightChild(x->parent->parent);
+                Node* tmp = x->parent->parent->parent;
+                rotateRight(x->parent);
+                if (i == 0)
+                {
+                    x->parent->left->color = Color::black;
+                    x->parent->right->color = Color::black;
+                    x->parent->parent = nullptr;
+                    root = x->parent;
+                    return;
+                }
+                else if (i == 1)
+                {
+                    tmp->left = x->parent;
+                    x->parent->parent = tmp;
+                    x->parent->color = Color::red;
+                    x->parent->left->color = Color::black;
+                    x->parent->right->color = Color::black;
+                    transform2RBTree(x->parent);
+                }
+                else
+                {
+                    tmp->right = x->parent;
+                    x->parent->parent = tmp;
+                    x->parent->color = Color::red;
+                    x->parent->left->color = Color::black;
+                    x->parent->right->color = Color::black;
+                    transform2RBTree(x->parent);
+                }
             }
             else
             {
+                int i = leftORrightChild(x->parent);
                 Node* tmp = x->parent->parent;
-                if (leftORrightChild(x->parent) == 0)
+                rotateLeft(x);
+                if (i == 0)
                 {
-                    rotateLeft(x);
                     x->parent = nullptr;
+                    x->color = Color::black;
+                    root = x;
+                    return;
                 }
-                else if (leftORrightChild(x->parent) == 1)
+                else if (i == 1)
                 {
-                    tmp->left = rotateLeft(x);
-
+                    tmp->left = x;
+                    x->parent = tmp;
+                    transform2RBTree(x->left);
                 }
                 else
-                {}
+                {
+                    tmp->right = x;
+                    x->parent = tmp;
+                    std::cout << x->left->key << std::endl;
+                    transform2RBTree(x->left);
+                }
+
             }
         }
+        else            //x->parent->color == black
+        {}
     }
 }
 

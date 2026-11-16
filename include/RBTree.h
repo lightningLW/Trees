@@ -77,7 +77,16 @@ public:
     }
     std::pair<bool, Node*> insert(int key)
     {
-        return _insert(key);
+        auto res = _insert(key);
+        if (res.first)
+        {
+            transform2RBTree(res.second);
+        }
+        else
+        {
+            std::cout << "insert fail!" << std::endl;
+        }
+        return res;
     }
 }; // !class RBTree
 
