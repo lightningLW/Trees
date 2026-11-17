@@ -187,7 +187,7 @@ void RBTree::transform2RBTree(Node* x)
         else            //x->parent->color == black
         {
             int i = leftORrightChild(x);
-            if (x == 0)
+            if (i == 0)
             {
                 x->color = Color::black;
                 return;

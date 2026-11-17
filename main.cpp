@@ -41,9 +41,9 @@ int main()
     rbTree.insert('c');
     rbTree.insert('h');
     rbTree.insert('x');
-    // rbTree.insert('m');
-    // rbTree.insert('p');
-    // rbTree.insert('l');
+    rbTree.insert('m');
+    rbTree.insert('p');
+    rbTree.insert('l');
     rbTree.LDR_traverse([](const Node* x) {
             std::cout << "key: " << static_cast<char>(x->key) << " color: " <<  static_cast<int>(x->color) << std::endl;
     });
