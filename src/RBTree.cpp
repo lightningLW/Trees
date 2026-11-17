@@ -215,6 +215,7 @@ void RBTree::transform2RBTree(Node* x)
                     rotateLeft(x);
                     if (j == 0)
                     {
+                        x->parent = x_parent_parent;
                         root = x;
                         return;
                     }
