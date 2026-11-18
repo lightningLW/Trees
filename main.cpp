@@ -34,30 +34,32 @@ int main()
 #endif  // !@二叉搜索树BST
 
     RBTree rbTree;
-    rbTree.insert(1);
-    rbTree.insert(3);
-    rbTree.insert(5);
-    rbTree.insert(7);
-    rbTree.insert(9);
-    // rbTree.insert(27);
-    // rbTree.insert(15);
-    // rbTree.insert(9);
-    // rbTree.insert(6);
-    // rbTree.insert(8);
-    // rbTree.insert(5);
     // rbTree.insert(25);
-    // rbTree.insert('e');
-    // rbTree.insert('a');
-    // rbTree.insert('r');
-    // rbTree.insert('c');
-    // rbTree.insert('h');
-    // rbTree.insert('x');
-    // rbTree.insert('m');
-    // rbTree.insert('p');
-    // rbTree.insert('l');
+    rbTree.insert('a');
+    rbTree.insert('c');
+    rbTree.insert('e');
+    rbTree.insert('h');
+    rbTree.insert('l');
+    rbTree.insert('m');
+    rbTree.insert('p');
+    rbTree.insert('r');
+    rbTree.insert('s');
+    rbTree.insert('x');
+    RBTree* p_rbTree = new RBTree;
+    p_rbTree->insert('a');
+    p_rbTree->insert('c');
+    p_rbTree->insert('e');
+    p_rbTree->insert('h');
+    p_rbTree->insert('l');
+    p_rbTree->insert('m');
+    p_rbTree->insert('p');
+    p_rbTree->insert('r');
+    p_rbTree->insert('s');
+    p_rbTree->insert('x');
+    delete p_rbTree;
     rbTree.LDR_traverse([](const Node* x) {
-            // std::cout << "key: " << static_cast<char>(x->key) << " color: " <<  static_cast<int>(x->color) << std::endl;
-            std::cout << "key: " << (x->key) << " color: " <<  static_cast<int>(x->color) << std::endl;
+            std::cout << "key: " << static_cast<char>(x->key) << " color: " <<  static_cast<int>(x->color) << std::endl;
+            // std::cout << "key: " << (x->key) << " color: " <<  static_cast<int>(x->color) << std::endl;
     });
 
     return 0;

@@ -67,10 +67,23 @@ private:
      * @return int: 0:表示无父节点; 1表示是左孩子; 2表示是右孩子
     */
     int leftORrightChild(const Node* x) const; 
+    /*
+     * @brief: 左->右->根遍历节点
+     * @param root: 向下执行的根节点
+     * @param func: 对当前节点所执行的操作
+    */
+    void _LRD_traverse(Node* root, std::function<void (Node*)> func = [](Node* x) {std::cout << x->key << '\t'; });
 public:
     RBTree() : root(nullptr) {}
     //TODO: : 析构函数 delete节点 
-    ~RBTree() {}
+    ~RBTree()
+    {
+        _LRD_traverse(root, [](Node* x) {
+            // std::cout << static_cast<char>(x->key) << " destruct" << std::endl;
+            delete x;
+            x = nullptr;
+        });
+    }
     void LDR_traverse(std::function<void (const Node*)> func = [](const Node* node) { std::cout << node->key << '\t';}) const
     {
         _LDR_traverse(root, func);

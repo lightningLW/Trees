@@ -281,3 +281,20 @@ int RBTree::leftORrightChild(const Node* x) const
         }
     }
 }
+
+void RBTree::_LRD_traverse(Node* root, std::function<void (Node*)> func)
+{
+    if (root == nullptr)
+    {
+        return;
+    }
+    if (root->left != nullptr)
+    {
+        _LRD_traverse(root->left, func);
+    }
+    if (root->right != nullptr)
+    {
+        _LRD_traverse(root->right, func);
+    }
+    func(root);
+}
