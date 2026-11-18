@@ -90,22 +90,47 @@ std::pair<bool, Node*> RBTree::_insert(int key)
 Node* RBTree::rotateLeft(Node* x)
 {
     Node* x_parent = x->parent;
-    x_parent->right = x->left;
-    x->left = x_parent;
+    // Node* x_parent_parent = x_parent->parent;
+    Node* x_left = x->left;
+
     x_parent->parent = x;
+    x_parent->right = x_left;
+
+    // x_left->parent = x_parent;
+    if (x_left != nullptr)
+    {
+        x_left->parent = x_parent;
+    }
+
+    x->left = x_parent;
+    // x->parent = x_parent_parent;
+
     x->color = x_parent->color;
     x_parent->color = Color::red;
+
     return x;
 }
 
 Node* RBTree::rotateRight(Node* x)
 {
-    Node* x_parent = x->parent;
-    x_parent->left = x->right;
-    x->right = x_parent;
-    x_parent->parent = x;
-    x->color = x_parent->color;
-    x_parent->color = Color::red;
+    Node* xParent = x->parent;
+    // Node* xParentP = xParent->parent;
+    Node* xRight = x->right;
+
+    xParent->parent = x;
+    xParent->left = xRight;
+
+    // xRight->parent = xParent;
+    if (xRight != nullptr)
+    {
+        xRight->parent = xParent;
+    }
+    // x->parent = xParentP;
+    x->right = xParent;
+
+    x->color = xParent->color;
+    xParent->color = Color::red;
+
     return x;
 }
 

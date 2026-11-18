@@ -18,8 +18,7 @@ enum class Color {
 }; // !enum class Color
 
 struct Node {
-    //HACK: 临时将int-->char, 便于调试. 以后调整回来
-    char key;
+    int key;
     Color color;
     Node* left;
     Node* right;
