@@ -12,21 +12,22 @@
 #include <iostream>
 #include <functional>
 
-enum class Color {
-    red,
-    black
-}; // !enum class Color
-
-struct Node {
-    int key;
-    Color color;
-    Node* left;
-    Node* right;
-    Node* parent;
-    Node(int _key) : key(_key), color(Color::red), left(nullptr), right(nullptr), parent(nullptr) {}
-}; //!struct Node
 
 class LLRB {
+public:
+    enum class Color {
+        red,
+        black
+    }; // !enum class Color
+
+    struct Node {
+        int key;
+        Color color;
+        Node* left;
+        Node* right;
+        Node* parent;
+        Node(int _key) : key(_key), color(Color::red), left(nullptr), right(nullptr), parent(nullptr) {}
+    }; //!struct Node
 private:
     Node* root;
     /*

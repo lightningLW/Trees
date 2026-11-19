@@ -1,6 +1,7 @@
 #include <iostream>
 #include "binarySearchTree.h"
 #include "LLRB.h"
+#include "RBTree.hpp"
 
 int main()
 {
@@ -57,10 +58,11 @@ int main()
     p_llrbTree->insert('s');
     p_llrbTree->insert('x');
     delete p_llrbTree;
-    llrbTree.LDR_traverse([](const Node* x) {
+    llrbTree.LDR_traverse([](const LLRB::Node* x) {
             std::cout << "key: " << static_cast<char>(x->key) << " color: " <<  static_cast<int>(x->color) << std::endl;
             // std::cout << "key: " << (x->key) << " color: " <<  static_cast<int>(x->color) << std::endl;
     });
 
+    RBTree<int, std::string> rbTree;
     return 0;
 }

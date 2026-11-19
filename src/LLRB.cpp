@@ -40,7 +40,7 @@ void LLRB::_LDR_traverse(const Node* root, std::function<void (const Node*)> fun
 
 }
 
-std::pair<bool, Node*> LLRB::_insert(int key)
+std::pair<bool, LLRB::Node*> LLRB::_insert(int key)
 {
     Node* x = new Node(key);
     if (root == nullptr)
@@ -87,7 +87,7 @@ std::pair<bool, Node*> LLRB::_insert(int key)
     }
 }
 
-Node* LLRB::rotateLeft(Node* x)
+LLRB::Node* LLRB::rotateLeft(Node* x)
 {
     Node* x_parent = x->parent;
     // Node* x_parent_parent = x_parent->parent;
@@ -111,7 +111,7 @@ Node* LLRB::rotateLeft(Node* x)
     return x;
 }
 
-Node* LLRB::rotateRight(Node* x)
+LLRB::Node* LLRB::rotateRight(Node* x)
 {
     Node* xParent = x->parent;
     // Node* xParentP = xParent->parent;
