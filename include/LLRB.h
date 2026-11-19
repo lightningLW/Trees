@@ -1,13 +1,13 @@
 /***********************************************************************************************************************
-* @file: RBTree.h
-* @brief: 红黑查找树模块
+* @file: LLRB.h
+* @brief: 红黑查找树模块 参照《算法（第4版）》的左倾红黑树, 即右节点不能是红色
 * @date: 2026-11-06
-* @update:
+* @update: 2026-11-19
 * @author: lightningLW
-* @note: 
+* @note: 左倾红黑树(LLRB)不是标准的红黑树
 ***********************************************************************************************************************/
-#ifndef __RBTREE_H__
-#define __RBTREE_H__
+#ifndef __LLRB_H__
+#define __LLRB_H__
 
 #include <iostream>
 #include <functional>
@@ -26,7 +26,7 @@ struct Node {
     Node(int _key) : key(_key), color(Color::red), left(nullptr), right(nullptr), parent(nullptr) {}
 }; //!struct Node
 
-class RBTree {
+class LLRB {
 private:
     Node* root;
     /*
@@ -60,7 +60,7 @@ private:
      * @param x: 新插入的节点
      * @return: void
     */
-    void transform2RBTree(Node* x);
+    void transform2LLRB(Node* x);
     /*
      * @brief:判断一个节点是左孩子还是右孩子
      * @param x: 待判定的节点
@@ -74,9 +74,9 @@ private:
     */
     void _LRD_traverse(Node* root, std::function<void (Node*)> func = [](Node* x) {std::cout << x->key << '\t'; });
 public:
-    RBTree() : root(nullptr) {}
+    LLRB() : root(nullptr) {}
     //TODO: : 析构函数 delete节点 
-    ~RBTree()
+    ~LLRB()
     {
         _LRD_traverse(root, [](Node* x) {
             // std::cout << static_cast<char>(x->key) << " destruct" << std::endl;
@@ -93,7 +93,7 @@ public:
         auto res = _insert(key);
         if (res.first)
         {
-            transform2RBTree(res.second);
+            transform2LLRB(res.second);
         }
         else
         {
@@ -101,6 +101,6 @@ public:
         }
         return res;
     }
-}; // !class RBTree
+}; // !class LLRB
 
-#endif // !__RBTREE_H__
+#endif // !__LLRB_H__

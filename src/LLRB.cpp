@@ -1,15 +1,15 @@
 /***********************************************************************************************************************
-* @file: RBTree.cpp
-* @brief: 红黑查找树实现模块
+* @file: LLRB.cpp
+* @brief: 左倾红黑查找树实现模块
 * @date: 2026-11-06
-* @update:
+* @update:2026-11-19
 * @author: lightningLW
 * @note: 
 ***********************************************************************************************************************/
-#include "RBTree.h"
+#include "LLRB.h"
 
 
-void RBTree::_LDR_traverse(const Node* root, std::function<void (const Node*)> func) const
+void LLRB::_LDR_traverse(const Node* root, std::function<void (const Node*)> func) const
 {
     const Node* left = root->left;
     const Node* right = root->right;
@@ -40,7 +40,7 @@ void RBTree::_LDR_traverse(const Node* root, std::function<void (const Node*)> f
 
 }
 
-std::pair<bool, Node*> RBTree::_insert(int key)
+std::pair<bool, Node*> LLRB::_insert(int key)
 {
     Node* x = new Node(key);
     if (root == nullptr)
@@ -87,7 +87,7 @@ std::pair<bool, Node*> RBTree::_insert(int key)
     }
 }
 
-Node* RBTree::rotateLeft(Node* x)
+Node* LLRB::rotateLeft(Node* x)
 {
     Node* x_parent = x->parent;
     // Node* x_parent_parent = x_parent->parent;
@@ -111,7 +111,7 @@ Node* RBTree::rotateLeft(Node* x)
     return x;
 }
 
-Node* RBTree::rotateRight(Node* x)
+Node* LLRB::rotateRight(Node* x)
 {
     Node* xParent = x->parent;
     // Node* xParentP = xParent->parent;
@@ -134,7 +134,7 @@ Node* RBTree::rotateRight(Node* x)
     return x;
 }
 
-void RBTree::transform2RBTree(Node* x)
+void LLRB::transform2LLRB(Node* x)
 {
     // std::cout << static_cast<char>(x->key) << std::endl;
     if (x == root)
@@ -169,7 +169,7 @@ void RBTree::transform2RBTree(Node* x)
                     x->parent->color = Color::red;
                     x->parent->left->color = Color::black;
                     x->parent->right->color = Color::black;
-                    transform2RBTree(x->parent);
+                    transform2LLRB(x->parent);
                 }
                 else
                 {
@@ -178,7 +178,7 @@ void RBTree::transform2RBTree(Node* x)
                     x->parent->color = Color::red;
                     x->parent->left->color = Color::black;
                     x->parent->right->color = Color::black;
-                    transform2RBTree(x->parent);
+                    transform2LLRB(x->parent);
                 }
             }
             else
@@ -197,14 +197,14 @@ void RBTree::transform2RBTree(Node* x)
                 {
                     tmp->left = x;
                     x->parent = tmp;
-                    transform2RBTree(x->left);
+                    transform2LLRB(x->left);
                 }
                 else
                 {
                     tmp->right = x;
                     x->parent = tmp;
                     std::cout << x->left->key << std::endl;
-                    transform2RBTree(x->left);
+                    transform2LLRB(x->left);
                 }
 
             }
@@ -230,7 +230,7 @@ void RBTree::transform2RBTree(Node* x)
                     x_leftBro->color = Color::black;
                     x->color = Color::black;
                     x_parent->color = Color::red;
-                    transform2RBTree(x_parent);
+                    transform2LLRB(x_parent);
                 }
                 else                                    //第3种情况: 插入的节点是右孩子, 且插入节点的左兄弟是黑孩子
                 {
@@ -262,7 +262,7 @@ void RBTree::transform2RBTree(Node* x)
     }
 }
 
-int RBTree::leftORrightChild(const Node* x) const
+int LLRB::leftORrightChild(const Node* x) const
 {
     const Node* x_parent = x->parent;
     if (x_parent == nullptr)
@@ -282,7 +282,7 @@ int RBTree::leftORrightChild(const Node* x) const
     }
 }
 
-void RBTree::_LRD_traverse(Node* root, std::function<void (Node*)> func)
+void LLRB::_LRD_traverse(Node* root, std::function<void (Node*)> func)
 {
     if (root == nullptr)
     {

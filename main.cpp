@@ -1,6 +1,6 @@
 #include <iostream>
 #include "binarySearchTree.h"
-#include "RBTree.h"
+#include "LLRB.h"
 
 int main()
 {
@@ -33,31 +33,31 @@ int main()
     // std::cout << std::endl;
 #endif  // !@二叉搜索树BST
 
-    RBTree rbTree;
-    // rbTree.insert(25);
-    rbTree.insert('a');
-    rbTree.insert('c');
-    rbTree.insert('e');
-    rbTree.insert('h');
-    rbTree.insert('l');
-    rbTree.insert('m');
-    rbTree.insert('p');
-    rbTree.insert('r');
-    rbTree.insert('s');
-    rbTree.insert('x');
-    RBTree* p_rbTree = new RBTree;
-    p_rbTree->insert('a');
-    p_rbTree->insert('c');
-    p_rbTree->insert('e');
-    p_rbTree->insert('h');
-    p_rbTree->insert('l');
-    p_rbTree->insert('m');
-    p_rbTree->insert('p');
-    p_rbTree->insert('r');
-    p_rbTree->insert('s');
-    p_rbTree->insert('x');
-    delete p_rbTree;
-    rbTree.LDR_traverse([](const Node* x) {
+    LLRB llrbTree;
+    // llrbTree.insert('s');
+    llrbTree.insert('s');
+    llrbTree.insert('e');
+    llrbTree.insert('a');
+    llrbTree.insert('r');
+    llrbTree.insert('c');
+    llrbTree.insert('h');
+    llrbTree.insert('x');
+    llrbTree.insert('m');
+    llrbTree.insert('p');
+    llrbTree.insert('l');
+    LLRB* p_llrbTree = new LLRB;
+    p_llrbTree->insert('a');
+    p_llrbTree->insert('c');
+    p_llrbTree->insert('e');
+    p_llrbTree->insert('h');
+    p_llrbTree->insert('l');
+    p_llrbTree->insert('m');
+    p_llrbTree->insert('p');
+    p_llrbTree->insert('r');
+    p_llrbTree->insert('s');
+    p_llrbTree->insert('x');
+    delete p_llrbTree;
+    llrbTree.LDR_traverse([](const Node* x) {
             std::cout << "key: " << static_cast<char>(x->key) << " color: " <<  static_cast<int>(x->color) << std::endl;
             // std::cout << "key: " << (x->key) << " color: " <<  static_cast<int>(x->color) << std::endl;
     });

@@ -27,7 +27,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)   # 配套常用，很多人漏掉
 add_executable(a.out
     ${PROJECT_SOURCE_DIR}/main.cpp
     ${PROJECT_SOURCE_DIR}/src/binarySearchTree.cpp
-    ${PROJECT_SOURCE_DIR}/src/RBTree.cpp
+    ${PROJECT_SOURCE_DIR}/src/LLRB.cpp
 )
 # !@指定 可执行文件
 
