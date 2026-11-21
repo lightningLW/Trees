@@ -76,7 +76,6 @@ private:
     void _LRD_traverse(Node* root, std::function<void (Node*)> func = [](Node* x) {std::cout << x->key << '\t'; });
 public:
     LLRB() : root(nullptr) {}
-    //TODO: : 析构函数 delete节点 
     ~LLRB()
     {
         _LRD_traverse(root, [](Node* x) {

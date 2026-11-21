@@ -76,8 +76,10 @@ int main()
     rbTree.insert(Node(9, ""));
     rbTree.insert(Node(6, ""));
     rbTree.insert(Node(8, ""));
-    rbTree.insert(Node(5, ""));
+    rbTree.insert(Node(5, "ha"));
     rbTree.insert(Node(25, ""));
+    // rbTree.LDR();
+    rbTree.remove(27);
     rbTree.LDR();
     return 0;
 }

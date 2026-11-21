@@ -51,6 +51,27 @@ public:
         _LDR_traverse(root, func);
     }
 
+    /*
+     * @brief: 根据键值key, 查找节点
+     * @param key: 键值
+     * @return: 返回查找节点的指针
+    */
+    Node* find(const Key& key) const
+    {
+        return _find(root, key);
+    }
+
+    //TODO: 删除节点函数 20261121
+    /*
+     * @brief: 删除键值key的节点
+     * @param key: 键值
+     * @return: 是否删除成功
+    */
+    bool remove(const Key& key)
+    {
+        Node* rmNode = _find(root, key);
+        return _remove(rmNode);
+    }
 private:
     Node* root;
 
@@ -108,6 +129,21 @@ private:
      * @return : 以x为根的中序前驱节点的指针
     */
     Node* _findMax(const Node* x) const;
+
+    /*
+     * @brief: 根据键值key, 查找节点
+     * @param root: 查找树的根节点
+     * @param key: 键值
+     * @return: 返回查找的节点的指针
+    */
+    Node* _find(Node* root, const Key& key) const;
+
+    /*
+     * @brief: 按照BST,删除节点x 
+     * param x: 待删除节点
+     * return: 是否删除成功
+    */
+    bool _remove(Node* x);
 }; //!class RBTree
 
 template <typename Key, typename Value>
@@ -368,5 +404,82 @@ typename RBTree<Key, Value>::Node* RBTree<Key, Value>::_findMax(const Node* x) c
         curNode = curNode->right;
     }
     return curNode;
+}
+
+template <typename Key, typename Value>
+typename RBTree<Key, Value>::Node* RBTree<Key, Value>::_find(Node* root, const Key& key) const
+{
+    Node* curNode = root;
+    Key curKey;
+    while (curNode != nullptr)
+    {
+        curKey = curNode->key;
+        if (key < curKey)
+        {
+            curNode = curNode->left;
+        }
+        else if (key > curKey)
+        {
+            curNode = curNode->right;
+        }
+        else
+        {
+            return curNode;
+        }
+    }
+    return nullptr;
+}
+
+template <typename Key, typename Value>
+bool RBTree<Key, Value>::_remove(Node* x)
+{
+    if (x == nullptr)
+    {
+        return false;
+    }
+    Node* left = x->left;
+    Node* right = x->right;
+    if (left == nullptr && right == nullptr)            //无左右孩子, 叶子节点直接删除释放即可
+    {
+        if (_leftORright(x) == 1)                       //x是左孩子
+        {
+            x->parent->left = nullptr;
+        }
+        else                                            //x是右孩子
+        {
+            x->parent->right = nullptr;
+        }
+        delete x;
+        x = nullptr;
+        return true;
+    }
+    else if (left != nullptr && right == nullptr)       //只有左孩子, 左孩子顶替x, 然后删除左孩子
+    {
+        x->key = left->key;
+        x->value = left->value;
+        x->color = left->color;
+        x->left = nullptr;
+        delete left;
+        left = nullptr;
+        return true;
+    }
+    else if (left == nullptr && right != nullptr)       //只有右孩子
+    {
+        x->key = right->key;
+        x->value = right->value;
+        x->color = right->color;
+        x->right = nullptr;
+        delete right;
+        right = nullptr;
+        return true;
+    }
+    else                                                //有左右孩子, 需要中序后继节点
+    {
+        Node* minNode = _findMin(x);
+        x->key = minNode->key;
+        x->value = minNode->value;
+        x->color = minNode->color;
+        _remove(minNode);
+    }
 }
 #endif // !__RBTREE_HPP__ 
