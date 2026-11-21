@@ -34,6 +34,7 @@ int main()
     // std::cout << std::endl;
 #endif  // !@二叉搜索树BST
 
+#if 0       //@左晴红黑树
     LLRB llrbTree;
     // llrbTree.insert('s');
     llrbTree.insert('s');
@@ -62,7 +63,21 @@ int main()
             std::cout << "key: " << static_cast<char>(x->key) << " color: " <<  static_cast<int>(x->color) << std::endl;
             // std::cout << "key: " << (x->key) << " color: " <<  static_cast<int>(x->color) << std::endl;
     });
+#endif          //!@左晴红黑树
 
     RBTree<int, std::string> rbTree;
+    using Node = RBTree<int, std::string>::Node;
+    rbTree.insert(Node(17, ""));
+    rbTree.insert(Node(18, ""));
+    rbTree.insert(Node(23, ""));
+    rbTree.insert(Node(34, ""));
+    rbTree.insert(Node(27, ""));
+    rbTree.insert(Node(15, ""));
+    rbTree.insert(Node(9, ""));
+    rbTree.insert(Node(6, ""));
+    rbTree.insert(Node(8, ""));
+    rbTree.insert(Node(5, ""));
+    rbTree.insert(Node(25, ""));
+    rbTree.LDR();
     return 0;
 }
