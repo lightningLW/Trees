@@ -94,6 +94,20 @@ private:
     void _LDR_traverse(Node* root, std::function<void (Node*)> func = [](Node* x) {
         std::cout << "Color: " << static_cast<int>(x->color) << " key: " << x->key << " value: " << x->value << std::endl;
     });
+
+    /*
+     * @brief: 查找以x为根的中序后继节点
+     * @param x: 查找树的根节点
+     * @return : 以x为根的中序后继节点的指针
+    */
+    Node* _findMin(const Node* x) const;
+
+    /*
+     * @brief: 查找以x为根的中序前驱节点
+     * @param x: 查找树的根节点
+     * @return : 以x为根的中序前驱节点的指针
+    */
+    Node* _findMax(const Node* x) const;
 }; //!class RBTree
 
 template <typename Key, typename Value>
@@ -324,5 +338,35 @@ void RBTree<Key, Value>::_LDR_traverse(Node* root, std::function<void (Node*)> f
         _LDR_traverse(right, func);
     }
 
+}
+
+template <typename Key, typename Value>
+typename RBTree<Key, Value>::Node* RBTree<Key, Value>::_findMin(const Node* x) const
+{
+    if (x == nullptr)
+    {
+        return nullptr;
+    }
+    Node* curNode = x->right;
+    while (curNode != nullptr && curNode->left != nullptr)
+    {
+        curNode = curNode->left;
+    }
+    return curNode;
+}
+
+template <typename Key, typename Value>
+typename RBTree<Key, Value>::Node* RBTree<Key, Value>::_findMax(const Node* x) const
+{
+    if (x == nullptr)
+    {
+        return nullptr;
+    }
+    Node* curNode = x->left;
+    while (curNode != nullptr && curNode->right != nullptr)
+    {
+        curNode = curNode->right;
+    }
+    return curNode;
 }
 #endif // !__RBTREE_HPP__ 
