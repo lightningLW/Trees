@@ -70,7 +70,15 @@ public:
     bool remove(const Key& key)
     {
         Node* rmNode = _find(root, key);
-        return _remove(rmNode);
+        if (rmNode == nullptr)
+        {
+            return false;
+        }
+        else
+        {
+            _remove(rmNode);
+            return true;
+        }
     }
 private:
     Node* root;
@@ -143,7 +151,13 @@ private:
      * param x: 待删除节点
      * return: 是否删除成功
     */
-    bool _remove(Node* x);
+    bool _removeBST(Node* x);
+
+    /*
+     * @brief: 红黑树删除节点x
+     * @param x: 待删除的原始节点
+    */
+    void _remove(Node* x);
 }; //!class RBTree
 
 template <typename Key, typename Value>
@@ -431,7 +445,7 @@ typename RBTree<Key, Value>::Node* RBTree<Key, Value>::_find(Node* root, const K
 }
 
 template <typename Key, typename Value>
-bool RBTree<Key, Value>::_remove(Node* x)
+bool RBTree<Key, Value>::_removeBST(Node* x)
 {
     if (x == nullptr)
     {
@@ -482,4 +496,68 @@ bool RBTree<Key, Value>::_remove(Node* x)
         return _remove(minNode);
     }
 }
+
+template <typename Key, typename Value>
+void RBTree<Key, Value>::_remove(Node* x)
+{
+    if (x == nullptr)
+    {
+        return;
+    }
+    Node* left = x->left;
+    Node* right = x->right;
+    Node* parent = x->parent;
+    //1. 无孩子
+    if (left == nullptr && right == nullptr)
+    {
+        //1. 删除节点x, 是红色🔴, 直接删除即可
+        if (x->color == Color::RED)
+        {
+            if (_leftORright(x) == 1)                       //删除节点x是左孩子
+            {
+                parent->left = nullptr;
+                delete x;
+                x = nullptr;
+            }
+            else                                            //删除节点x是右孩子
+            {
+                parent->right = nullptr;
+                delete x;
+                x = nullptr;
+            }
+        }
+        //TODO: 复杂重点
+        //2. 删除节点x, 是黑色⚫
+        else
+        {}
+    }
+    //2. 只有左孩子或者只有右孩子.
+    // 如果删除节点x是🔴, 存在单孩子只能是⚫, 但是那样就违背了黑路同性质
+    // 因此, 删除节点x只能是⚫, 孩子只能是🔴, 转而删除孩子节点, 可以直接删除
+    else if (left != nullptr && right == nullptr)           //只有左孩子
+    {
+        x->key = left->key;
+        x->value = left->value;
+        x->left = nullptr;
+        delete left;
+        left = nullptr;
+    }
+    else if (left == nullptr && right != nullptr)           //只有右孩子
+    {
+        x->key = right->key;
+        x->value = right->value;
+        x->right = nullptr;
+        delete right;
+        right = nullptr;
+    }
+    //3. 有两个孩子, 需要中序后继节点/中序前驱节点替换
+    else
+    {
+        Node* minNode = _findMin(x);                        //中序后继节点
+        x->key = minNode->key;
+        x->value = minNode->value;
+        _remove(minNode);
+    }
+}
+
 #endif // !__RBTREE_HPP__ 
