@@ -347,12 +347,12 @@ void RBTree<Key, Value>::_insertRepair(Node* x)
 template <typename Key, typename Value>
 void RBTree<Key, Value>::_LDR_traverse(Node* root, std::function<void (Node*)> func)
 {
-    Node* left = root->left;
-    Node* right = root->right;
     if (root == nullptr)
     {
         return;
     }
+    Node* left = root->left;
+    Node* right = root->right;
     if (left == nullptr && right == nullptr)
     {
         // std::cout << root->val << "\t";
@@ -479,7 +479,7 @@ bool RBTree<Key, Value>::_remove(Node* x)
         x->key = minNode->key;
         x->value = minNode->value;
         x->color = minNode->color;
-        _remove(minNode);
+        return _remove(minNode);
     }
 }
 #endif // !__RBTREE_HPP__ 
