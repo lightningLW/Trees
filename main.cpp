@@ -129,5 +129,13 @@ int main()
     rbTree.LDR();
     std::cout << std::endl;
     rbTree.LDR();
+    rbTree.remove(8);
+    std::cout << "8" << std::endl;
+    rbTree.LDR();
+    std::cout << std::endl;
+    rbTree.remove(5);
+    std::cout << "5" << std::endl;
+    rbTree.LDR();
+    std::cout << std::endl;
     return 0;
 }

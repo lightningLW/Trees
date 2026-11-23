@@ -157,7 +157,8 @@ private:
      * @brief: 红黑树删除节点x
      * @param x: 待删除的原始节点
     */
-    void _remove(Node* x, bool isRemove = true);
+    //TODO: isDoubleBlack
+    void _remove(Node* x, bool isDoubleBlack = false);
 }; //!class RBTree
 
 template <typename Key, typename Value>
@@ -498,7 +499,7 @@ bool RBTree<Key, Value>::_removeBST(Node* x)
 }
 
 template <typename Key, typename Value>
-void RBTree<Key, Value>::_remove(Node* x, bool isRemove)
+void RBTree<Key, Value>::_remove(Node* x, bool isDoubleBlack)
 {
     if (x == nullptr)
     {
@@ -508,28 +509,22 @@ void RBTree<Key, Value>::_remove(Node* x, bool isRemove)
     Node* right = x->right;
     Node* parent = x->parent;
     //1. 无孩子
-    if (left == nullptr && right == nullptr)
+    if (isDoubleBlack == true || (left == nullptr && right == nullptr))
     {
         //1. 删除节点x, 是红色🔴, 直接删除即可
         if (x->color == Color::RED)
         {
             if (_leftORright(x) == 1)                       //删除节点x是左孩子
             {
-                if (isRemove == true)
-                {
-                    parent->left = nullptr;
-                    delete x;
-                    x = nullptr;
-                }
+                parent->left = nullptr;
+                delete x;
+                x = nullptr;
             }
             else                                            //删除节点x是右孩子
             {
-                if (isRemove == true)
-                {
-                    parent->right = nullptr;
-                    delete x;
-                    x = nullptr;
-                }
+                parent->right = nullptr;
+                delete x;
+                x = nullptr;
             }
         }
         //TODO: 复杂重点
@@ -538,12 +533,9 @@ void RBTree<Key, Value>::_remove(Node* x, bool isRemove)
         {
             if (_leftORright(x) == 0)                       //待删除节点是x是根节点
             {
-                if (isRemove == true)
-                {
-                    delete x;
-                    x = nullptr;
-                    root = nullptr;
-                }
+                delete x;
+                x = nullptr;
+                root = nullptr;
             }
             else if (_leftORright(x) == 1)                  //待删除节点x是左孩子
             {
@@ -559,7 +551,8 @@ void RBTree<Key, Value>::_remove(Node* x, bool isRemove)
                         parent->color = Color::BLACK;
                         _rightRotate(bro);
                         _leftRotate(parent);
-                        if (isRemove == true)
+                        // if (isRemove == true)
+                        if (isDoubleBlack == false)
                         {
                             parent->left = nullptr;
                             delete x;
@@ -572,7 +565,8 @@ void RBTree<Key, Value>::_remove(Node* x, bool isRemove)
                         bro->color = parent->color;
                         parent->color = Color::BLACK;
                         _leftRotate(parent);
-                        if (isRemove == true)
+                        // if (isRemove == true)
+                        if (isDoubleBlack == false)
                         {
                             parent->left = nullptr;
                             delete x;
@@ -583,7 +577,8 @@ void RBTree<Key, Value>::_remove(Node* x, bool isRemove)
                     else
                     {
                         bro->color = Color::RED;
-                        if (isRemove == true)
+                        // if (isRemove == true)
+                        if (isDoubleBlack == false)
                         {
                             parent->left = nullptr;
                             delete x;
@@ -599,7 +594,7 @@ void RBTree<Key, Value>::_remove(Node* x, bool isRemove)
                         }
                         else
                         {
-                            _remove(parent, false);
+                            _remove(parent, true);
                         }
                     }
                 }
@@ -626,7 +621,8 @@ void RBTree<Key, Value>::_remove(Node* x, bool isRemove)
                         bro->color = parent->color;
                         parent->color = Color::BLACK;
                         _rightRotate(parent);
-                        if (isRemove == true)
+                        // if (isRemove == true)
+                        if (isDoubleBlack == false)
                         {
                             parent->right = nullptr;
                             delete x;
@@ -640,7 +636,8 @@ void RBTree<Key, Value>::_remove(Node* x, bool isRemove)
                         parent->color = Color::BLACK;
                         _leftRotate(bro);
                         _rightRotate(parent);
-                        if (isRemove == true)
+                        // if (isRemove == true)
+                        if (isDoubleBlack == false)
                         {
                             parent->right = nullptr;
                             delete x;
@@ -651,7 +648,8 @@ void RBTree<Key, Value>::_remove(Node* x, bool isRemove)
                     else
                     {
                         bro->color = Color::RED;
-                        if (isRemove == true)
+                        // if (isRemove == true)
+                        if (isDoubleBlack == false)
                         {
                             parent->right = nullptr;
                             delete x;
@@ -667,7 +665,7 @@ void RBTree<Key, Value>::_remove(Node* x, bool isRemove)
                         }
                         else
                         {
-                            _remove(parent, false);
+                            _remove(parent, true);
                         }
 
                     }
@@ -681,16 +679,17 @@ void RBTree<Key, Value>::_remove(Node* x, bool isRemove)
                 }
             }
         }
+        //双黑节点
     }
     //2. 只有左孩子或者只有右孩子.
     // 如果删除节点x是🔴, 存在单孩子只能是⚫, 但是那样就违背了黑路同性质
     // 因此, 删除节点x只能是⚫, 孩子只能是🔴, 转而删除孩子节点, 可以直接删除
     else if (left != nullptr && right == nullptr)           //只有左孩子
     {
-        x->key = left->key;
-        x->value = left->value;
-        if (isRemove == true)
+        if (isDoubleBlack == false)
         {
+            x->key = left->key;
+            x->value = left->value;
             x->left = nullptr;
             delete left;
             left = nullptr;
@@ -698,10 +697,10 @@ void RBTree<Key, Value>::_remove(Node* x, bool isRemove)
     }
     else if (left == nullptr && right != nullptr)           //只有右孩子
     {
-        x->key = right->key;
-        x->value = right->value;
-        if (isRemove == true)
+        if (isDoubleBlack == false)
         {
+            x->key = right->key;
+            x->value = right->value;
             x->right = nullptr;
             delete right;
             right = nullptr;
@@ -710,10 +709,13 @@ void RBTree<Key, Value>::_remove(Node* x, bool isRemove)
     //3. 有两个孩子, 需要中序后继节点/中序前驱节点替换
     else
     {
-        Node* minNode = _findMin(x);                        //中序后继节点
-        x->key = minNode->key;
-        x->value = minNode->value;
-        _remove(minNode);
+        if (isDoubleBlack == false)
+        {
+            Node* minNode = _findMin(x);                        //中序后继节点
+            x->key = minNode->key;
+            x->value = minNode->value;
+            _remove(minNode);
+        }
     }
 }
 
