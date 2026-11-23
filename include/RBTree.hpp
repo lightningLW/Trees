@@ -157,7 +157,7 @@ private:
      * @brief: 红黑树删除节点x
      * @param x: 待删除的原始节点
     */
-    void _remove(Node* x);
+    void _remove(Node* x, bool isRemove = true);
 }; //!class RBTree
 
 template <typename Key, typename Value>
@@ -498,7 +498,7 @@ bool RBTree<Key, Value>::_removeBST(Node* x)
 }
 
 template <typename Key, typename Value>
-void RBTree<Key, Value>::_remove(Node* x)
+void RBTree<Key, Value>::_remove(Node* x, bool isRemove)
 {
     if (x == nullptr)
     {
@@ -515,21 +515,172 @@ void RBTree<Key, Value>::_remove(Node* x)
         {
             if (_leftORright(x) == 1)                       //删除节点x是左孩子
             {
-                parent->left = nullptr;
-                delete x;
-                x = nullptr;
+                if (isRemove == true)
+                {
+                    parent->left = nullptr;
+                    delete x;
+                    x = nullptr;
+                }
             }
             else                                            //删除节点x是右孩子
             {
-                parent->right = nullptr;
-                delete x;
-                x = nullptr;
+                if (isRemove == true)
+                {
+                    parent->right = nullptr;
+                    delete x;
+                    x = nullptr;
+                }
             }
         }
         //TODO: 复杂重点
         //2. 删除节点x, 是黑色⚫
         else
-        {}
+        {
+            if (_leftORright(x) == 0)                       //待删除节点是x是根节点
+            {
+                if (isRemove == true)
+                {
+                    delete x;
+                    x = nullptr;
+                    root = nullptr;
+                }
+            }
+            else if (_leftORright(x) == 1)                  //待删除节点x是左孩子
+            {
+                Node* bro = parent->right;                  //肯定存在兄弟节点, 否则违背了黑路同原则
+                Node* broSon_l = bro->left;
+                Node* broSon_r = bro->right;
+                if (bro->color == Color::BLACK)
+                {
+                    //1. 兄弟子节点至少有一个红色节点
+                    if (broSon_l != nullptr && broSon_l->color == Color::RED)       //RL型
+                    {
+                        broSon_l->color = parent->color;
+                        parent->color = Color::BLACK;
+                        _rightRotate(bro);
+                        _leftRotate(broSon_l);
+                        if (isRemove == true)
+                        {
+                            parent->left = nullptr;
+                            delete x;
+                            x = nullptr;
+                        }
+                    }
+                    else if (broSon_r != nullptr && broSon_r->color == Color::RED)  //RR型
+                    {
+                        broSon_r->color = bro->color;
+                        bro->color = parent->color;
+                        parent->color = Color::BLACK;
+                        _leftRotate(bro);
+                        if (isRemove == true)
+                        {
+                            parent->left = nullptr;
+                            delete x;
+                            x = nullptr;
+                        }
+                    }
+                    //2. 孩子都是黑色
+                    else
+                    {
+                        bro->color = Color::RED;
+                        if (isRemove == true)
+                        {
+                            parent->left = nullptr;
+                            delete x;
+                            x = nullptr;
+                        }
+                        if (parent == root)
+                        {
+                            return;
+                        }
+                        else if (parent->color == Color::RED)
+                        {
+                            parent->color = Color::BLACK;
+                        }
+                        else
+                        {
+                            _remove(parent, false);
+                        }
+                    }
+                }
+                else                                        //兄弟节点是🔴
+                {
+                    bro->color = Color::BLACK;
+                    parent->color = Color::RED;
+                    _leftRotate(bro);
+                    _remove(x);
+                }
+
+            }
+            else                                            //待删除节点x是右孩子
+            {
+                Node* bro = parent->left;
+                Node* broSon_l = bro->left;
+                Node* broSon_r = bro->right;
+                if (bro->color == Color::BLACK)
+                {
+                    //1. 兄弟子节点至少有一个红色节点
+                    if (broSon_l != nullptr && broSon_l->color == Color::RED)       //LL型
+                    {
+                        broSon_l->color = bro->color;
+                        bro->color = parent->color;
+                        parent->color = Color::BLACK;
+                        _rightRotate(bro);
+                        if (isRemove == true)
+                        {
+                            parent->right = nullptr;
+                            delete x;
+                            x = nullptr;
+                        }
+                    }
+                    else if (broSon_r != nullptr && broSon_r->color == Color::RED)  //LR型
+                    {
+
+                        broSon_r->color = parent->color;
+                        parent->color = Color::BLACK;
+                        _leftRotate(bro);
+                        _rightRotate(broSon_r);
+                        if (isRemove == true)
+                        {
+                            parent->right = nullptr;
+                            delete x;
+                            x = nullptr;
+                        }
+                    }
+                    //2. 孩子都是黑色
+                    else
+                    {
+                        bro->color = Color::RED;
+                        if (isRemove == true)
+                        {
+                            parent->right = nullptr;
+                            delete x;
+                            x = nullptr;
+                        }
+                        if (parent == root)
+                        {
+                            return;
+                        }
+                        else if (parent->color == Color::RED)
+                        {
+                            parent->color = Color::BLACK;
+                        }
+                        else
+                        {
+                            _remove(parent, false);
+                        }
+
+                    }
+                }
+                else                                        //兄弟节点是🔴
+                {
+                    bro->color = Color::BLACK;
+                    parent->color = Color::RED;
+                    _rightRotate(bro);
+                    _remove(x);
+                }
+            }
+        }
     }
     //2. 只有左孩子或者只有右孩子.
     // 如果删除节点x是🔴, 存在单孩子只能是⚫, 但是那样就违背了黑路同性质
@@ -538,17 +689,23 @@ void RBTree<Key, Value>::_remove(Node* x)
     {
         x->key = left->key;
         x->value = left->value;
-        x->left = nullptr;
-        delete left;
-        left = nullptr;
+        if (isRemove == true)
+        {
+            x->left = nullptr;
+            delete left;
+            left = nullptr;
+        }
     }
     else if (left == nullptr && right != nullptr)           //只有右孩子
     {
         x->key = right->key;
         x->value = right->value;
-        x->right = nullptr;
-        delete right;
-        right = nullptr;
+        if (isRemove == true)
+        {
+            x->right = nullptr;
+            delete right;
+            right = nullptr;
+        }
     }
     //3. 有两个孩子, 需要中序后继节点/中序前驱节点替换
     else
