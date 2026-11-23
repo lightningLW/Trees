@@ -31,8 +31,9 @@ public:         //所需要的辅助类型
 
 public:
     RBTree() { root = nullptr; }
-    //TODO: destruction 函数
-    ~RBTree() {}
+    ~RBTree() {
+        _LRD_traverse(root, [](Node* x) { delete x; x = nullptr;});
+    }
 
     std::pair<bool, Node*> insert(Node x)
     {
@@ -61,7 +62,6 @@ public:
         return _find(root, key);
     }
 
-    //TODO: 删除节点函数 20261121
     /*
      * @brief: 删除键值key的节点
      * @param key: 键值
@@ -125,6 +125,15 @@ private:
     });
 
     /*
+     * @brief: 左->右->根遍历节点
+     * @param root: 向下执行的根节点
+     * @param func: 对当前节点所执行的操作
+    */
+    void _LRD_traverse(Node* root, std::function<void (Node*)> func = [](Node* x) {
+        std::cout << "Color: " << static_cast<int>(x->color) << " key: " << x->key << " value: " << x->value << std::endl;
+    });
+
+    /*
      * @brief: 查找以x为根的中序后继节点
      * @param x: 查找树的根节点
      * @return : 以x为根的中序后继节点的指针
@@ -156,8 +165,8 @@ private:
     /*
      * @brief: 红黑树删除节点x
      * @param x: 待删除的原始节点
+     * @param isDoubleBlack: 是否是需要修复的双黑节点
     */
-    //TODO: isDoubleBlack
     void _remove(Node* x, bool isDoubleBlack = false);
 }; //!class RBTree
 
@@ -527,7 +536,6 @@ void RBTree<Key, Value>::_remove(Node* x, bool isDoubleBlack)
                 x = nullptr;
             }
         }
-        //TODO: 复杂重点
         //2. 删除节点x, 是黑色⚫
         else
         {
@@ -717,6 +725,24 @@ void RBTree<Key, Value>::_remove(Node* x, bool isDoubleBlack)
             _remove(minNode);
         }
     }
+}
+
+template <typename Key, typename Value>
+void RBTree<Key, Value>::_LRD_traverse(Node* root, std::function<void (Node*)> func)
+{
+    if (root == nullptr)
+    {
+        return;
+    }
+    if (root->left != nullptr)
+    {
+        _LRD_traverse(root->left, func);
+    }
+    if (root->right != nullptr)
+    {
+        _LRD_traverse(root->right, func);
+    }
+    func(root);
 }
 
 #endif // !__RBTREE_HPP__ 
