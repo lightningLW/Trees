@@ -558,7 +558,7 @@ void RBTree<Key, Value>::_remove(Node* x, bool isRemove)
                         broSon_l->color = parent->color;
                         parent->color = Color::BLACK;
                         _rightRotate(bro);
-                        _leftRotate(broSon_l);
+                        _leftRotate(parent);
                         if (isRemove == true)
                         {
                             parent->left = nullptr;
@@ -571,7 +571,7 @@ void RBTree<Key, Value>::_remove(Node* x, bool isRemove)
                         broSon_r->color = bro->color;
                         bro->color = parent->color;
                         parent->color = Color::BLACK;
-                        _leftRotate(bro);
+                        _leftRotate(parent);
                         if (isRemove == true)
                         {
                             parent->left = nullptr;
@@ -607,7 +607,7 @@ void RBTree<Key, Value>::_remove(Node* x, bool isRemove)
                 {
                     bro->color = Color::BLACK;
                     parent->color = Color::RED;
-                    _leftRotate(bro);
+                    _leftRotate(parent);
                     _remove(x);
                 }
 
@@ -625,7 +625,7 @@ void RBTree<Key, Value>::_remove(Node* x, bool isRemove)
                         broSon_l->color = bro->color;
                         bro->color = parent->color;
                         parent->color = Color::BLACK;
-                        _rightRotate(bro);
+                        _rightRotate(parent);
                         if (isRemove == true)
                         {
                             parent->right = nullptr;
@@ -639,7 +639,7 @@ void RBTree<Key, Value>::_remove(Node* x, bool isRemove)
                         broSon_r->color = parent->color;
                         parent->color = Color::BLACK;
                         _leftRotate(bro);
-                        _rightRotate(broSon_r);
+                        _rightRotate(parent);
                         if (isRemove == true)
                         {
                             parent->right = nullptr;
@@ -676,7 +676,7 @@ void RBTree<Key, Value>::_remove(Node* x, bool isRemove)
                 {
                     bro->color = Color::BLACK;
                     parent->color = Color::RED;
-                    _rightRotate(bro);
+                    _rightRotate(parent);
                     _remove(x);
                 }
             }
